@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscar Alumno</title>
+</head>
+<body>
+  <h1>Buscar Alumno por ID</h1>
+  <form id="searchForm">
+    <label for="alumnoId">ID del Alumno:</label>
+    <input type="text" id="alumnoId" name="alumnoId" required>
+    <button type="submit">Buscar</button>
+  </form>
+
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('searchForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const alumnoId = document.getElementById('alumnoId').value;
+      const response = await fetch(`/api/alumno/${alumnoId}`);
+      const data = await response.json();
+      const resultDiv = document.getElementById('result');
+      if (response.ok) {
+        resultDiv.innerHTML = `
+          <h2>Información del Alumno</h2>
+          <p><strong>Nombre:</strong> ${data.nombre}</p>
+          <p><strong>Edad:</strong> ${data.edad}</p>
+          <p><strong>Curso:</strong> ${data.curso}</p>
+        `;
+      } else {
+        resultDiv.innerHTML = `<p>${data.msg || 'Error al buscar el alumno'}</p>`;
+      }
+    });
+  </script>
+</body>
+</html>
