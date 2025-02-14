@@ -14,6 +14,8 @@ router.get('/:id', async (req, res) => {
       nombre: `${alumno.primer_nombre} ${alumno.segundo_nombre || ''} ${alumno.apellido} ${alumno.segundo_apellido || ''}`.trim(),
       edad: calcularEdad(alumno.fecha_nacimiento), // Calcula la edad a partir de la fecha de nacimiento
       curso: alumno.grado,
+      contacto: alumno.telefono_padre
+      
     };
 
     res.json(alumnoTransformado);

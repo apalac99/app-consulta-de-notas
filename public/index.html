@@ -6,7 +6,7 @@
   <title>Buscar Alumno</title>
 </head>
 <body>
-  <h1>Buscar Alumno por ID</h1>
+  <h1>Buscar Alumno por ID.</h1>
   <form id="searchForm">
     <label for="alumnoId">ID del Alumno:</label>
     <input type="text" id="alumnoId" name="alumnoId" required>
@@ -28,6 +28,7 @@
           <p><strong>Nombre:</strong> ${data.nombre}</p>
           <p><strong>Edad:</strong> ${data.edad}</p>
           <p><strong>Curso:</strong> ${data.curso}</p>
+          <p><strong>Contacto padre:</strong> ${data.contacto}</p>
         `;
       } else {
         resultDiv.innerHTML = `<p>${data.msg || 'Error al buscar el alumno'}</p>`;
