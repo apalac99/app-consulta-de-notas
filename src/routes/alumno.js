@@ -14,8 +14,14 @@ router.get('/:id', async (req, res) => {
       nombre: `${alumno.primer_nombre} ${alumno.segundo_nombre || ''} ${alumno.apellido} ${alumno.segundo_apellido || ''}`.trim(),
       edad: calcularEdad(alumno.fecha_nacimiento), // Calcula la edad a partir de la fecha de nacimiento
       curso: alumno.grado,
-      contacto: alumno.telefono_padre
-      
+      contacto: alumno.telefono_padre,
+      materias: alumno.materias.map((materia) => ({
+        nombre: materia.nombre,
+        notas: materia.notas,
+        anotaciones: materia.anotaciones,
+      })),
+      calificacion_disciplina: alumno.calificacion_disciplina,
+      materias_extracurriculares: alumno.materias_extracurriculares,
     };
 
     res.json(alumnoTransformado);

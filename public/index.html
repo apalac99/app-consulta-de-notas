@@ -6,7 +6,7 @@
   <title>Buscar Alumno</title>
 </head>
 <body>
-  <h1>Buscar Alumno por ID.</h1>
+  <h1>Buscar Alumno por ID</h1>
   <form id="searchForm">
     <label for="alumnoId">ID del Alumno:</label>
     <input type="text" id="alumnoId" name="alumnoId" required>
@@ -23,13 +23,55 @@
       const data = await response.json();
       const resultDiv = document.getElementById('result');
       if (response.ok) {
-        resultDiv.innerHTML = `
+        // Mostrar información básica del alumno
+        let html = `
           <h2>Información del Alumno</h2>
           <p><strong>Nombre:</strong> ${data.nombre}</p>
           <p><strong>Edad:</strong> ${data.edad}</p>
           <p><strong>Curso:</strong> ${data.curso}</p>
           <p><strong>Contacto padre:</strong> ${data.contacto}</p>
         `;
+
+        // Mostrar materias y anotaciones
+        if (data.materias && data.materias.length > 0) {
+          html += `<h3>Materias</h3><ul>`;
+          data.materias.forEach((materia) => {
+            html += `
+              <li>
+                <strong>${materia.nombre}</strong>
+                <p>Notas: ${materia.notas.join(', ')}</p>
+                <p>Anotaciones:</p>
+                <ul>
+                  ${materia.anotaciones.map((anotacion) => `
+                    <li>${anotacion.fecha}: ${anotacion.comentario}</li>
+                  `).join('')}
+                </ul>
+              </li>
+            `;
+          });
+          html += `</ul>`;
+        }
+
+        // Mostrar calificación disciplinaria
+        if (data.calificacion_disciplina) {
+          html += `
+            <h3>Calificación Disciplinaria</h3>
+            <p><strong>Calificación:</strong> ${data.calificacion_disciplina.calificacion}</p>
+            <p><strong>Anotaciones:</strong> ${data.calificacion_disciplina.anotaciones}</p>
+          `;
+        }
+
+        // Mostrar materias extracurriculares
+        if (data.materias_extracurriculares && data.materias_extracurriculares.length > 0) {
+          html += `
+            <h3>Materias Extracurriculares</h3>
+            <ul>
+              ${data.materias_extracurriculares.map((materia) => `<li>${materia}</li>`).join('')}
+            </ul>
+          `;
+        }
+
+        resultDiv.innerHTML = html;
       } else {
         resultDiv.innerHTML = `<p>${data.msg || 'Error al buscar el alumno'}</p>`;
       }
