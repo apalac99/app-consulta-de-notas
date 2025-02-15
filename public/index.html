@@ -12,6 +12,7 @@
     <input type="text" id="alumnoId" name="alumnoId" required>
     <button type="submit">Buscar</button>
   </form>
+  
 
   <div id="result"></div>
 
@@ -71,6 +72,7 @@
           `;
         }
 
+        
         resultDiv.innerHTML = html;
       } else {
         resultDiv.innerHTML = `<p>${data.msg || 'Error al buscar el alumno'}</p>`;

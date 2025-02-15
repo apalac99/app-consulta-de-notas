@@ -4,7 +4,8 @@ const Alumno = require('../models/AlumnoB');
 
 router.get('/:id', async (req, res) => {
   try {
-    const alumno = await Alumno.findById(req.params.id);
+    // Buscar por el campo `id` en lugar de `_id`
+    const alumno = await Alumno.findOne({ id: req.params.id });
     if (!alumno) {
       return res.status(404).json({ msg: 'Alumno no encontrado' });
     }
